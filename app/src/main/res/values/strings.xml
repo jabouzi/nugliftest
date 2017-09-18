@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Nuglif Test (Skander J)</string>
+    <string name="pleaseWait">Please wait we are retrieving the Articles list</string>
+    <string name="ArticlesListError">Unable to retrieve Articles list</string>
+    <string name="ArticleItemError">Unable to retrieve Article item</string>
+    <string name="LocationItemError">Unable to retrieve your location</string>
+    <string name="yourPosition">Your position: %1$s / %2$s </string>
+    <string name="error_locationNotSupported">Error your location is not supported</string>
+    <string name="send_location_notifications_permission_label">Sends location Notifications</string>
+    <string name="send_location_notifications_permission_description">Allow this application to send location notifications to other applications</string>
+</resources>
