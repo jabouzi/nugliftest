@@ -1,5 +1,7 @@
 package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Looper;
 
 import com.google.gson.Gson;
@@ -9,11 +11,13 @@ import com.skanderjabouzi.nuglifandroidtest.app.NuglifApplication;
 import com.skanderjabouzi.nuglifandroidtest.helper.AsyncTaskHelper;
 import com.skanderjabouzi.nuglifandroidtest.location.LocationWrapper;
 import com.skanderjabouzi.nuglifandroidtest.model.ArticlesItem;
+import com.skanderjabouzi.nuglifandroidtest.model.MyLocation;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.List;
 
 public class ArticlesPresenter implements ArticlesPresenterInterface {
@@ -40,6 +44,23 @@ public class ArticlesPresenter implements ArticlesPresenterInterface {
             articlesView.showErrorMessage();
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void saveLocation(SharedPreferences.Editor editor, Context context, double latitude, double longitude) {
+        Date date = new Date(System.currentTimeMillis());
+        editor.putFloat("latitude", (float) latitude);
+        editor.putFloat("longitude", (float) longitude);
+        editor.putFloat("time", (float) date.getTime());
+        editor.commit();
+    }
+
+    @Override
+    public void getSavedLocation( MyLocation myLocation, SharedPreferences pref) {
+        myLocation.setLatitude(pref.getFloat("latitude", 0));
+        myLocation.setLongitude(pref.getFloat("longitude", 0));
+        myLocation.setTime(pref.getLong("time", 0));
+
     }
 
     public void getLocation() {

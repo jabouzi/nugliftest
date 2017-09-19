@@ -1,6 +1,7 @@
 package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

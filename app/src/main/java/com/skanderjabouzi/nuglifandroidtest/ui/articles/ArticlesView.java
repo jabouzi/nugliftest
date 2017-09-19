@@ -24,5 +24,4 @@ public interface ArticlesView {
     void showSecondPane(ArticlesItem articlesItem);
 
     void setLocationResut(String state);
-
 }
