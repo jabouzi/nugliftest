@@ -4,6 +4,14 @@
         android:id="@+id/action_sort"
         android:showAsAction="always"
         android:icon="@drawable/icn_filtres_blanc"
-        android:title="@string/action_sort"/>
+        android:title="@string/action_sort">
+        <menu>
+            <item android:id="@+id/date"
+                android:title="@string/date" />
+            <item android:id="@+id/channel"
+                android:title="@string/channel" />
+        </menu>
+    </item>
+
 
 </menu>

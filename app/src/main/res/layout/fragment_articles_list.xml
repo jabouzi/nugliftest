@@ -20,7 +20,8 @@
         android:id="@+id/ly_list_form"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@+id/activity_articles_progressBar">
 
     <TextView
         android:id="@+id/textInfo"
@@ -55,7 +56,7 @@
             app:borderWidth="0dp"
             app:elevation="6dp"
             app:pressedTranslationZ="12dp"
-            android:src="@android:drawable/ic_menu_add" />
+            android:src="@android:drawable/ic_menu_search" />
     </LinearLayout>
 
 </RelativeLayout>

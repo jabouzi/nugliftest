@@ -1,5 +1,7 @@
 package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +27,8 @@ import com.skanderjabouzi.nuglifandroidtest.location.LocationStateReceiver;
 import com.skanderjabouzi.nuglifandroidtest.model.ArticlesItem;
 import com.skanderjabouzi.nuglifandroidtest.ui.article.ArticleActivity;
 import com.skanderjabouzi.nuglifandroidtest.ui.article.ArticleFragment;
+
+import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
 import java.util.List;
@@ -85,8 +90,11 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
-            case R.id.action_sort:
-                showSnackBar(getResources().getString(R.string.error_locationNotSupported));
+            case R.id.date:
+                showSnackBar();
+                return true;
+            case R.id.channel:
+                showSnackBar();
                 return true;
         }
         return false;
@@ -155,7 +163,7 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         }
     }
 
-    private void intViews(View view) {
+    private void intViews(final View view) {
         progressBar = (ProgressBar) view.findViewById(R.id.activity_articles_progressBar);
         textInfo = (TextView) view.findViewById(R.id.textInfo);
         textInfo.setText(getResources().getString(R.string.pleaseWait));
@@ -165,14 +173,20 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Would you like a coffee?", Toast.LENGTH_SHORT).show();
-                showSnackBar(getResources().getString(R.string.error_locationNotSupported));
+
+
             }
         });
     }
 
-    private void showSnackBar(String text) {
-        Snackbar snackbar = Snackbar.make(relativeLayout, text, Snackbar.LENGTH_LONG);
+    private void showSnackBar() {
+        Snackbar snackbar = Snackbar.make(relativeLayout, "", Snackbar.LENGTH_LONG)
+        .setAction("Restore", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+        snackbar.setActionTextColor(Color.RED);
         snackbar.show();
     }
 }

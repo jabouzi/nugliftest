@@ -8,5 +8,7 @@
     <string name="error_locationNotSupported">Error your location is not supported</string>
     <string name="send_location_notifications_permission_label">Sends location Notifications</string>
     <string name="send_location_notifications_permission_description">Allow this application to send location notifications to other applications</string>
-    <string name="action_sort">Sort</string>
+    <string name="action_sort">Sort by</string>
+    <string name="date">Date</string>
+    <string name="channel">Channel</string>
 </resources>
