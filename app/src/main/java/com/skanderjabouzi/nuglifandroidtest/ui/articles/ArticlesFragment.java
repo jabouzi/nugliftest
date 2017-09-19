@@ -2,15 +2,20 @@ package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,14 +37,16 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
     private final String KEY_RECYCLER_STATE = "recycler_state";
 
-    ProgressBar progressBar;
-    TextView textInfo;
-    RecyclerView recycler_view;
+    private ProgressBar progressBar;
+    private TextView textInfo;
+    private RecyclerView recycler_view;
+    private RelativeLayout relativeLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         setRetainInstance(true);
     }
 
@@ -66,6 +73,23 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_sort:
+                showSnackBar(getResources().getString(R.string.error_locationNotSupported));
+                return true;
+        }
+        return false;
     }
 
     @Override
@@ -134,14 +158,21 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
     private void intViews(View view) {
         progressBar = (ProgressBar) view.findViewById(R.id.activity_articles_progressBar);
         textInfo = (TextView) view.findViewById(R.id.textInfo);
-        recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
         textInfo.setText(getResources().getString(R.string.pleaseWait));
+        recycler_view = (RecyclerView) view.findViewById(R.id.recycler_view);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.rlayourt);
         FloatingActionButton FAB = (FloatingActionButton) view.findViewById(R.id.button_addc);
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity(), "Would you like a coffee?", Toast.LENGTH_SHORT).show();
+                showSnackBar(getResources().getString(R.string.error_locationNotSupported));
             }
         });
+    }
+
+    private void showSnackBar(String text) {
+        Snackbar snackbar = Snackbar.make(relativeLayout, text, Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }

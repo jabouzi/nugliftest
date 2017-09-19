@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_sort"
+        android:showAsAction="always"
+        android:icon="@drawable/icn_filtres_blanc"
+        android:title="@string/action_sort"/>
+
+</menu>
