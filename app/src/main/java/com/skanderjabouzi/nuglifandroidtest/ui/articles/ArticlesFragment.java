@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skanderjabouzi.nuglifandroidtest.R;
+import com.skanderjabouzi.nuglifandroidtest.helper.ListHelper;
 import com.skanderjabouzi.nuglifandroidtest.location.LocationStateReceiver;
 import com.skanderjabouzi.nuglifandroidtest.model.ArticlesItem;
 import com.skanderjabouzi.nuglifandroidtest.ui.article.ArticleActivity;
@@ -31,6 +32,7 @@ import com.skanderjabouzi.nuglifandroidtest.ui.article.ArticleFragment;
 import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ArticlesFragment extends Fragment  implements ArticlesView{
@@ -39,6 +41,8 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
     private InputStream inputStream;
     private ArticlesPresenter articlesPresenter;
     private LocationStateReceiver locationStateReceiver;
+    private ListHelper listHelper;
+    List<ArticlesItem> list;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
     private final String KEY_RECYCLER_STATE = "recycler_state";
 
@@ -69,14 +73,14 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         articlesPresenter.getLocation();
         adapter = new ArticlesAdapter();
         inputStream =  getResources().openRawResource(R.raw.articles);
-        List<ArticlesItem> list = articlesPresenter.getArticles(inputStream);
+        list = articlesPresenter.getArticles(inputStream);
         adapter.setArticlesList(list);
         adapter.setView(this);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        listHelper = new ListHelper();
         return view;
     }
 
@@ -88,12 +92,19 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        List<ArticlesItem> _list = new ArrayList<ArticlesItem>(list);
         switch (item.getItemId()) {
 
             case R.id.date:
+                listHelper.sortByDate(_list);
+                adapter.setArticlesList(_list);
+                adapter.notifyDataSetChanged();
                 showSnackBar();
                 return true;
             case R.id.channel:
+                listHelper.sortByChannel(_list);
+                adapter.setArticlesList(_list);
+                adapter.notifyDataSetChanged();
                 showSnackBar();
                 return true;
         }
@@ -184,6 +195,8 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         .setAction("Restore", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                adapter.setArticlesList(list);
+                adapter.notifyDataSetChanged();
             }
         });
         snackbar.setActionTextColor(Color.RED);
