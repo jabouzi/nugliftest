@@ -1,6 +1,7 @@
 package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesViewHolder> {
     @Override
     public void onBindViewHolder(final ArticlesViewHolder holder, int position) {
         final ArticlesItem item = items.get(position);
-
+        Log.e("LIST1", java.util.Arrays.asList(item.getId()).toString());
         holder.title.setText("[" + item.getChannelName() + "] " + item.getTitle());
 
         holder.getContainer().setOnClickListener(new View.OnClickListener() {

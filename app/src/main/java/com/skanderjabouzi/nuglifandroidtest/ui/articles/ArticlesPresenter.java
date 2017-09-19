@@ -1,6 +1,7 @@
 package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
 import android.os.Looper;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,6 +32,7 @@ public class ArticlesPresenter implements ArticlesPresenterInterface {
         articlesView.showLoading();
 
         try {
+            Log.e("LIST2", inputStream.toString());
             final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             Type listType = new TypeToken<List<ArticlesItem>>() {
             }.getType();

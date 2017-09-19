@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skanderjabouzi.nuglifandroidtest.R;
+import com.skanderjabouzi.nuglifandroidtest.app.NuglifApplication;
 import com.skanderjabouzi.nuglifandroidtest.helper.ListHelper;
 import com.skanderjabouzi.nuglifandroidtest.location.LocationStateReceiver;
 import com.skanderjabouzi.nuglifandroidtest.model.ArticlesItem;
@@ -65,22 +67,23 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         setRetainInstance(true);
         View view = inflater.inflate(R.layout.fragment_articles_list, container, false);
         intViews(view);
-        hideArticles();
+//        hideArticles();
+        NuglifApplication app = NuglifApplication.getApplication();
+        listHelper = new ListHelper();
         locationStateReceiver = new LocationStateReceiver(getActivity());
         locationStateReceiver.setObserver(this);
         articlesPresenter = new ArticlesPresenter();
         articlesPresenter.setView(this);
         articlesPresenter.getLocation();
-        adapter = new ArticlesAdapter();
         inputStream =  getResources().openRawResource(R.raw.articles);
-        list = articlesPresenter.getArticles(inputStream);
+        List<ArticlesItem> list = app.getItems();
+        adapter = new ArticlesAdapter();
         adapter.setArticlesList(list);
         adapter.setView(this);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        listHelper = new ListHelper();
         return view;
     }
 

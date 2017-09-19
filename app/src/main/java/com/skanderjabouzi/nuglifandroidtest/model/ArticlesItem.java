@@ -12,6 +12,13 @@ public class ArticlesItem implements Serializable {
     private String channelName;
     private String publicationDate;
 
+    public ArticlesItem(String id, String title, String channelName, String publicationDate) {
+        this.id = id;
+        this.title = title;
+        this.channelName = channelName;
+        this.publicationDate = publicationDate;
+    }
+
     public String getId() {
         return id;
     }
