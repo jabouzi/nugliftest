@@ -1,6 +1,7 @@
 package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
 import com.skanderjabouzi.nuglifandroidtest.model.ArticlesItem;
+import com.skanderjabouzi.nuglifandroidtest.model.MyLocation;
 
 public interface ArticlesView {
     void showLoading();
@@ -15,7 +16,7 @@ public interface ArticlesView {
 
     void showLocationErrorMessage();
 
-    void showLocationInfo(double latitude, double longitude, double minlat);
+    void showLocationInfo(MyLocation location);
 
     void launchArticleDetail(ArticlesItem articlesItem);
 

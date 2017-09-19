@@ -56,14 +56,14 @@ public class ArticlesPresenter implements ArticlesPresenterInterface {
     }
 
     @Override
-    public void getSavedLocation( MyLocation myLocation, SharedPreferences pref) {
+    public void getSavedLocation(MyLocation myLocation, SharedPreferences pref) {
         myLocation.setLatitude(pref.getFloat("latitude", 0));
         myLocation.setLongitude(pref.getFloat("longitude", 0));
         myLocation.setTime(pref.getLong("time", 0));
 
     }
 
-    public void getLocation() {
+    public void getLocation(MyLocation myLocation) {
         myAsyncTask = new AsyncTaskHelper();
         NuglifApplication app = NuglifApplication.getApplication();
         locationWrapper = new LocationWrapper(app.getApplicationContext());
@@ -77,7 +77,8 @@ public class ArticlesPresenter implements ArticlesPresenterInterface {
 
             @Override
             public void doItPostExecute() {
-                articlesView.showLocationInfo(locationWrapper.getLat(), locationWrapper.getLong(), Configs.LOWEST_LATITUDE_CANADA);
+//                articlesView.showLocationInfo(locationWrapper.getLat(), locationWrapper.getLong(), Configs.LOWEST_LATITUDE_CANADA);
+                articlesView.showLocationInfo(myLocation);
             }
         });
     }
