@@ -3,20 +3,12 @@ package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.support.v4.app.FragmentTransaction;
 
 import com.skanderjabouzi.nuglifandroidtest.R;
-import com.skanderjabouzi.nuglifandroidtest.app.NuglifApplication;
-import com.skanderjabouzi.nuglifandroidtest.model.ArticlesItem;
-import com.skanderjabouzi.nuglifandroidtest.ui.article.ArticleFragment;
 
-import java.io.InputStream;
-import java.util.List;
 
 
 public class ArticlesActivity extends AppCompatActivity{

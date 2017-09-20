@@ -1,7 +1,5 @@
 package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,15 +10,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,8 +30,6 @@ import com.skanderjabouzi.nuglifandroidtest.model.ArticlesItem;
 import com.skanderjabouzi.nuglifandroidtest.model.MyLocation;
 import com.skanderjabouzi.nuglifandroidtest.ui.article.ArticleActivity;
 import com.skanderjabouzi.nuglifandroidtest.ui.article.ArticleFragment;
-
-import org.xmlpull.v1.XmlPullParser;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -54,6 +47,7 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
     List<ArticlesItem> list;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
     NuglifApplication app;
+    private boolean articlesVisibles = false;
 
     private ProgressBar progressBar;
     private TextView textInfo;
@@ -74,14 +68,12 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         app = NuglifApplication.getApplication();
         view = inflater.inflate(R.layout.fragment_articles_list, container, false);
         intViews(view);
-        hideArticles();
         myLocation = new MyLocation();
         locationStateReceiver = new LocationStateReceiver(getActivity());
         locationStateReceiver.setObserver(this);
         articlesPresenter = new ArticlesPresenter(getActivity());
         articlesPresenter.setView(this);
         articlesPresenter.checkLocationEnabled(getActivity());
-        getLocation();
         adapter = new ArticlesAdapter();
         inputStream =  getResources().openRawResource(R.raw.articles);
         list = articlesPresenter.getArticles(inputStream);
@@ -93,8 +85,11 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         listHelper = new ListHelper();
         if (isWideScreen()) {
-            showSecondPane(list.get(0));
+            if (articlesVisibles == true) {
+                showSecondPane(list.get(0));
+            }
         }
+        getLocation();
         return view;
     }
 
@@ -142,10 +137,19 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
     }
 
     @Override
-    public void showArticles() { recycler_view.setAlpha(1); }
+    public void showArticles() {
+        recycler_view.setAlpha(1);
+        articlesVisibles = true;
+        if (isWideScreen()) {
+            showSecondPane(list.get(0));
+        }
+    }
 
     @Override
-    public void hideArticles() { recycler_view.setAlpha(0); }
+    public void hideArticles() {
+        recycler_view.setAlpha(0);
+        articlesVisibles = false;
+    }
 
     @Override
     public void showErrorMessage() {
@@ -205,7 +209,6 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION : {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.e("PERMISSION", String.valueOf(requestCode));
                     getLocation();
                 } else {
                     showLocationErrorMessage();
@@ -254,9 +257,10 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
         if (articlesPresenter.checkLocation(app.getPref())) {
             myLocation = articlesPresenter.getSavedLocation(myLocation, app.getPref());
             showLocationInfo(myLocation);
+            showArticles();
         } else {
+            hideArticles();
             articlesPresenter.getLocation(myLocation);
         }
-        showArticles();
     }
 }

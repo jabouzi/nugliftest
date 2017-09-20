@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +24,9 @@ public class LocationWrapper {
         int loc2 = ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION);
 
         if (loc2 != PackageManager.PERMISSION_GRANTED) {
-            Log.e("PRESENTER", "loc2 NO");
             listPermissionsNeeded.add(android.Manifest.permission.ACCESS_FINE_LOCATION);
         }
         if (loc != PackageManager.PERMISSION_GRANTED) {
-            Log.e("PRESENTER", "loc NO");
             listPermissionsNeeded.add(android.Manifest.permission.ACCESS_COARSE_LOCATION);
         }
 
@@ -40,7 +37,6 @@ public class LocationWrapper {
             intent.setAction(CONN_INTENT);
             intent.putExtra("CONNSTATE", "false");
             context.sendBroadcast(intent);
-            Log.e("PRESENTER", "LocationWrapper NO");
         } else {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);

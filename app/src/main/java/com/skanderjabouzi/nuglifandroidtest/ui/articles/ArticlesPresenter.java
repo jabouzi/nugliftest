@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
 import android.provider.Settings;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.skanderjabouzi.nuglifandroidtest.app.Configs;
-import com.skanderjabouzi.nuglifandroidtest.app.NuglifApplication;
 import com.skanderjabouzi.nuglifandroidtest.helper.AsyncTaskHelper;
 import com.skanderjabouzi.nuglifandroidtest.location.LocationWrapper;
 import com.skanderjabouzi.nuglifandroidtest.model.ArticlesItem;
@@ -90,7 +87,6 @@ public class ArticlesPresenter implements ArticlesPresenterInterface {
 
             @Override
             public void doItPostExecute() {
-                Log.e("LOC", "DONE");
                 myLocation.setLatitude(locationWrapper.getLat());
                 myLocation.setLongitude(locationWrapper.getLong());
                 articlesView.showLocationInfo(myLocation);
@@ -99,8 +95,6 @@ public class ArticlesPresenter implements ArticlesPresenterInterface {
     }
 
     public boolean checkLocation(SharedPreferences pref) {
-        Log.e("PREF", String.valueOf(pref.getFloat("latitude", 0)));
-        Log.e("PREF", String.valueOf(pref.contains("latitude")));
         if (pref.contains("latitude")) {
             return true;
         }

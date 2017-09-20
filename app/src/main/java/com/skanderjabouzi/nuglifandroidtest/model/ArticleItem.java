@@ -22,13 +22,6 @@ public class ArticleItem {
     private String lienURL;
     private String organisation;
     private String sharedId;
-//    private List<RelatedArticle> relatedArticles = null;
-//    @JsonProperty("visual")
-//    private List<Visual_> visual = null;
-//    @JsonProperty("mobileChapters")
-//    private List<MobileChapter> mobileChapters = null;
-//    @JsonIgnore
-//    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Integer getId() {
         return id;
@@ -150,38 +143,4 @@ public class ArticleItem {
         this.sharedId = sharedId;
     }
 
-//    @JsonProperty("relatedArticles")
-//    public List<RelatedArticle> getRelatedArticles() {
-//        return relatedArticles;
-//    }
-//
-//    @JsonProperty("relatedArticles")
-//    public void setRelatedArticles(List<RelatedArticle> relatedArticles) {
-//        this.relatedArticles = relatedArticles;
-//    }
-//
-//    @JsonProperty("visual")
-//    public List<Visual_> getVisual() {
-//        return visual;
-//    }
-//
-//    @JsonProperty("visual")
-//    public void setVisual(List<Visual_> visual) {
-//        this.visual = visual;
-//    }
-//
-//    @JsonProperty("mobileChapters")
-//    public List<MobileChapter> getMobileChapters() {
-//        return mobileChapters;
-//    }
-//
-//    @JsonProperty("mobileChapters")
-//    public void setMobileChapters(List<MobileChapter> mobileChapters) {
-//        this.mobileChapters = mobileChapters;
-//    }
-//
-//    @JsonAnyGetter
-//    public Map<String, Object> getAdditionalProperties() {
-//        return this.additionalProperties;
-//    }
 }

@@ -4,8 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.skanderjabouzi.nuglifandroidtest.location.LocationWrapper;
-
 public class NuglifApplication extends Application {
     private static NuglifApplication sApplication;
     private SharedPreferences pref;
