@@ -64,6 +64,8 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        setRetainInstance(true);
     }
 
     @Override
@@ -111,14 +113,18 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
                 listHelper.sortByDate(_list);
                 adapter.setArticlesList(_list);
                 adapter.notifyDataSetChanged();
-                showSecondPane(_list.get(0));
+                if (isWideScreen()) {
+                    showSecondPane(_list.get(0));
+                }
                 showSnackBar();
                 return true;
             case R.id.channel:
                 listHelper.sortByChannel(_list);
                 adapter.setArticlesList(_list);
                 adapter.notifyDataSetChanged();
-                showSecondPane(_list.get(0));
+                if (isWideScreen()) {
+                    showSecondPane(_list.get(0));
+                }
                 showSnackBar();
                 return true;
         }
@@ -178,10 +184,8 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
     public void showSecondPane(ArticlesItem articlesItem) {
         ArticleFragment fragmentItem = ArticleFragment.newInstance(articlesItem);
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        if (ft != null) {
-            ft.replace(R.id.flDetailContainer, fragmentItem);
-            ft.commit();
-        }
+        ft.replace(R.id.flDetailContainer, fragmentItem);
+        ft.commit();
     }
 
     @Override
@@ -237,7 +241,9 @@ public class ArticlesFragment extends Fragment  implements ArticlesView{
             public void onClick(View view) {
                 adapter.setArticlesList(list);
                 adapter.notifyDataSetChanged();
-                showSecondPane(list.get(0));
+                if (isWideScreen()) {
+                    showSecondPane(list.get(0));
+                }
             }
         });
         snackbar.setActionTextColor(Color.RED);
