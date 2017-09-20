@@ -62,4 +62,9 @@ public class LocationWrapper {
     public Boolean gotLocation(){
         return locationListener.gotLocation();
     }
+
+    public boolean checkLocationEnabled(Context context) {
+            locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
 }

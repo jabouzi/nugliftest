@@ -1,7 +1,9 @@
 package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -32,6 +34,13 @@ public class ArticlesActivity extends AppCompatActivity{
         FrameLayout fragmentItemDetail = (FrameLayout) findViewById(R.id.flDetailContainer);
         if (fragmentItemDetail != null) {
             isTwoPane = true;
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.button_addc);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getBaseContext(), "FAB2", Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 

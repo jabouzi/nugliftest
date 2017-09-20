@@ -5,6 +5,12 @@ public class MyLocation {
     private double longitude;
     private double time;
 
+    public MyLocation() {
+        latitude = 0;
+        longitude = 0;
+        time = 0;
+    }
+
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }

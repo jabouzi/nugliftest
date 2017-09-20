@@ -1,8 +1,11 @@
 package com.skanderjabouzi.nuglifandroidtest.ui.articles;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
+import android.provider.Settings;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,6 +27,12 @@ public class ArticlesPresenter implements ArticlesPresenterInterface {
     private ArticlesView articlesView;
     AsyncTaskHelper myAsyncTask;
     LocationWrapper locationWrapper;
+    Context context;
+
+    public ArticlesPresenter(Context context) {
+        this.context = context;
+        locationWrapper = new LocationWrapper(context);
+    }
 
     @Override
     public void setView(ArticlesView view) {
@@ -56,17 +65,21 @@ public class ArticlesPresenter implements ArticlesPresenterInterface {
     }
 
     @Override
-    public void getSavedLocation(MyLocation myLocation, SharedPreferences pref) {
-        myLocation.setLatitude(pref.getFloat("latitude", 0));
-        myLocation.setLongitude(pref.getFloat("longitude", 0));
-        myLocation.setTime(pref.getLong("time", 0));
-
+    public MyLocation getSavedLocation(MyLocation myLocation, SharedPreferences pref) {
+        myLocation.setLatitude((double) pref.getFloat("latitude", 0));
+        myLocation.setLongitude((double) pref.getFloat("longitude", 0));
+        myLocation.setTime((double) pref.getFloat("time", 0));
+        return myLocation;
     }
 
-    public void getLocation(MyLocation myLocation) {
+
+
+    public void getLocation(final MyLocation myLocation) {
+        if (myAsyncTask != null) {
+            cancelTask();
+        }
+        locationWrapper = new LocationWrapper(context);
         myAsyncTask = new AsyncTaskHelper();
-        NuglifApplication app = NuglifApplication.getApplication();
-        locationWrapper = new LocationWrapper(app.getApplicationContext());
         myAsyncTask.execute(new AsyncTaskHelper.DoSomething() {
             @Override
             public void doItInBackground() {
@@ -77,9 +90,33 @@ public class ArticlesPresenter implements ArticlesPresenterInterface {
 
             @Override
             public void doItPostExecute() {
-//                articlesView.showLocationInfo(locationWrapper.getLat(), locationWrapper.getLong(), Configs.LOWEST_LATITUDE_CANADA);
+                Log.e("LOC", "DONE");
+                myLocation.setLatitude(locationWrapper.getLat());
+                myLocation.setLongitude(locationWrapper.getLong());
                 articlesView.showLocationInfo(myLocation);
             }
         });
+    }
+
+    public boolean checkLocation(SharedPreferences pref) {
+        Log.e("PREF", String.valueOf(pref.getFloat("latitude", 0)));
+        Log.e("PREF", String.valueOf(pref.contains("latitude")));
+        if (pref.contains("latitude")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void checkLocationEnabled(Context context) {
+        if (!locationWrapper.checkLocationEnabled(context)) {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            context.startActivity(intent);
+        }
+    }
+
+    @Override
+    public void cancelTask() {
+        myAsyncTask = null;
     }
 }

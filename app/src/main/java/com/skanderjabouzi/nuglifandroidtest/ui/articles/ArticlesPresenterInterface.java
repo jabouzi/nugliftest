@@ -16,5 +16,9 @@ public interface ArticlesPresenterInterface {
 
     void saveLocation(SharedPreferences.Editor editor, Context context, double latitude, double longitude);
 
-    void getSavedLocation(MyLocation myLocation, SharedPreferences preferences);
+    MyLocation getSavedLocation(MyLocation myLocation, SharedPreferences preferences);
+
+    void checkLocationEnabled(Context context);
+
+    void cancelTask();
 }
